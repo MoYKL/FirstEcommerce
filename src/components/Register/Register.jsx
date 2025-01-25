@@ -4,13 +4,12 @@ import logo from "./../../assets/freshcart-logo.svg";
 import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 export default function Register() {
   const [userMessage, setuserMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [Loader, setLoader] = useState(false);
-  let navigate = useNavigate()
-
+  let navigate = useNavigate();
 
   let mySchema = Yup.object({
     name: Yup.string()
@@ -18,7 +17,9 @@ export default function Register() {
       .min(3, "not less than 3 chars")
       .max(18, " Not larger Than 18 Chars"),
     email: Yup.string().required("Email is Required").email("Not valid Email"),
-    password: Yup.string().required("Password is Required").matches(
+    password: Yup.string()
+      .required("Password is Required")
+      .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "Not valid Password At least 8 characters,  Include a mix of uppercase letters, lowercase letters, digits, and special characters. "
       ),
@@ -47,23 +48,22 @@ export default function Register() {
     },
   });
 
-  async function registerForm(values){
-    setLoader(true)
+  async function registerForm(values) {
+    setLoader(true);
     return await axios
-    .post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
-    .then((data)=>{
-    console.log(data.data.message);
-    setuserMessage(data.data.message);
-    setLoader(false);
-    navigate("/login")
-  })
-  .catch((err)=>{
-    console.log(err.response.data.message);
-    setErrorMessage(err.response.data.message);
-    setLoader(false)
-  });
+      .post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
+      .then((data) => {
+        console.log(data.data.message);
+        setuserMessage(data.data.message);
+        setLoader(false);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        setErrorMessage(err.response.data.message);
+        setLoader(false);
+      });
   }
-
 
   return (
     <>
@@ -75,15 +75,22 @@ export default function Register() {
                 Create an account
               </h3>
 
-              {userMessage ? (<div className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert"
-              > 
-              <p>{userMessage}</p>
-              </div>
-               ) : null}
-               {errorMessage ? (<div className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
-               <p>{errorMessage}</p></div>
-               ) : null} 
-
+              {userMessage ? (
+                <div
+                  className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                  role="alert"
+                >
+                  <p>{userMessage}</p>
+                </div>
+              ) : null}
+              {errorMessage ? (
+                <div
+                  className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
+                  role="alert"
+                >
+                  <p>{errorMessage}</p>
+                </div>
+              ) : null}
 
               <div className="space-y-6">
                 <div>
@@ -103,7 +110,7 @@ export default function Register() {
                     className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
                     placeholder="Enter name"
                   />
-                  {formik.touched.name && formik.errors.name? (
+                  {formik.touched.name && formik.errors.name ? (
                     <div
                       className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                       role="alert"
@@ -129,7 +136,7 @@ export default function Register() {
                     className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
                     placeholder="Enter email"
                   />
-                  { formik.touched.email && formik.errors.email? (
+                  {formik.touched.email && formik.errors.email ? (
                     <div
                       className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                       role="alert"
@@ -155,7 +162,7 @@ export default function Register() {
                     className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
                     placeholder="Enter password"
                   />
-                    {formik.touched.password && formik.errors.password? (
+                  {formik.touched.password && formik.errors.password ? (
                     <div
                       className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                       role="alert"
@@ -181,7 +188,7 @@ export default function Register() {
                     className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
                     placeholder="Enter password"
                   />
-                    {formik.touched.rePassword && formik.errors.rePassword? (
+                  {formik.touched.rePassword && formik.errors.rePassword ? (
                     <div
                       className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                       role="alert"
@@ -207,7 +214,7 @@ export default function Register() {
                     className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
                     placeholder="Enter Your Phone Number"
                   />
-                    {formik.touched.phone && formik.errors.phone ? (
+                  {formik.touched.phone && formik.errors.phone ? (
                     <div
                       className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                       role="alert"
@@ -219,20 +226,22 @@ export default function Register() {
               </div>
 
               <div className="mt-6">
-                {Loader ? <button
-                  type="submit"
-                  className="py-3 px-6 text-sm text-white tracking-wide bg-main rounded-lg focus:outline-none"
-                >
-                  <i className="fa fa-spinner fa-spin"></i>
-                </button> : <button
-                disabled={!(formik.isValid && formik.dirty)}
-                  type="submit"
-                  className="py-3 px-6 text-sm text-white tracking-wide bg-main rounded-lg focus:outline-none"
-                >
-                  Register
-                </button>}
-                
-
+                {Loader ? (
+                  <button
+                    type="submit"
+                    className="py-3 px-6 text-sm text-white tracking-wide bg-main rounded-lg focus:outline-none"
+                  >
+                    <i className="fa fa-spinner fa-spin"></i>
+                  </button>
+                ) : (
+                  <button
+                    disabled={!(formik.isValid && formik.dirty)}
+                    type="submit"
+                    className="py-3 px-6 text-sm text-white tracking-wide bg-main rounded-lg focus:outline-none"
+                  >
+                    Register
+                  </button>
+                )}
               </div>
               <p className="text-sm text-gray-800 mt-6">
                 Already have an account?
