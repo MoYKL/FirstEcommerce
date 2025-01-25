@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import 'flowbite';
 import styles from "./Navbar.module.css";
 import logo from "./../../assets/freshcart-logo.svg";
 import { TokenContext } from "../Context/TokenContext";
