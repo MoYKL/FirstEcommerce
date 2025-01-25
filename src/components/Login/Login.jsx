@@ -18,8 +18,9 @@ export default function Login() {
         email: Yup.string().required("Email is Required").email("Not valid Email"),
         password: Yup.string()
         .required("Password is Required")
-        .matches(/^[A-Z][a-z0-9]{3,8}$/,
-            "Not valid Password it Must start with Capital Latter,Small letter and number Aa2 ")
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          "Not valid Password At least 8 characters,  Include a mix of uppercase letters, lowercase letters, digits, and special characters. ")
       });
         let formik = useFormik({
           initialValues: {
