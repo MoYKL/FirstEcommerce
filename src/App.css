@@ -20,6 +20,11 @@ nav{
 {
     color: var(--rating-color);
 }
+.active{
+    display: block;
+    color: var(--main-color);
+
+}
 .cursor-pointer
 {
     cursor: pointer;

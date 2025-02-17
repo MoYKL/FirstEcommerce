@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Import FontAwesome CSS
-import Loader from '../Loader/Loader'; // Import your Loader component
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import { ImSpinner8 } from 'react-icons/im';
 
 export default function BrandsPage() {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch brands from the API
   async function getBrands() {
     try {
       const response = await axios.get('https://ecommerce.routemisr.com/api/v1/brands');
-      console.log(response.data.data); // Check the API response
-      setBrands(response.data.data); // Set brands in state
-      setLoading(false); // Set loading to false
+      console.log(response.data.data); 
+      setBrands(response.data.data); 
+      setLoading(false);
+
     } catch (err) {
       console.log(err);
-      setLoading(false); // Set loading to false in case of error
+      setLoading(false);
     }
   }
 
-  // Fetch brands on component mount
   useEffect(() => {
     getBrands();
   }, []);
+    if (loading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <ImSpinner8 className="animate-spin text-6xl text-main" />
+        </div>
+      );
+    }
 
   return (
     <div className="container mx-auto p-4">
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
           <h1 className="text-3xl font-bold text-center my-8">Shop by Brand</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {brands.map((brand) => (
@@ -51,8 +53,6 @@ export default function BrandsPage() {
               </div>
             ))}
           </div>
-        </>
-      )}
     </div>
   );
 }
